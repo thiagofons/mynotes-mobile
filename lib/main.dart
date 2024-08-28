@@ -24,6 +24,25 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: const HomeScreen(),
+      darkTheme: ThemeData(
+        useMaterial3: true,
+
+        // Define the default brightness and colors.
+        cardColor: const Color(0xffffc93c),
+
+        colorScheme: const ColorScheme.light(
+            brightness: Brightness.dark,
+            error: Color(0xFFE3170A),
+            primary: Color(0xFF212121),
+            secondary: Color(0xFFD1D1D1)),
+
+        textTheme: TextTheme(
+          titleLarge: GoogleFonts.inter(),
+          bodyLarge: GoogleFonts.inter(),
+          bodyMedium: GoogleFonts.inter(),
+          bodySmall: GoogleFonts.inter(),
+        ),
+      ),
       theme: ThemeData(
         useMaterial3: true,
 
@@ -31,9 +50,10 @@ class MainApp extends StatelessWidget {
         cardColor: const Color(0xffffc93c),
 
         colorScheme: const ColorScheme.light(
-            surface: Colors.white,
-            brightness: Brightness.dark,
-            error: Color(0xFFE3170A)),
+          brightness: Brightness.dark,
+          error: Color(0xFFE3170A),
+          primary: Color(0xff2974ff),
+        ),
 
         textTheme: TextTheme(
           titleLarge: GoogleFonts.inter(),

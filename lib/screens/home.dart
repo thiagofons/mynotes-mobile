@@ -14,6 +14,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.secondary,
         title: Center(
           child: Image.asset(
             "assets/images/logo.png",
@@ -28,14 +29,16 @@ class HomeScreen extends StatelessWidget {
             filter: ImageFilter.blur(
                 sigmaX: 10.0, sigmaY: 10.0), // Define o nível de desfoque
             child: Container(
-              color: Colors.white
+              color: Theme.of(context)
+                  .colorScheme
+                  .secondary
                   .withOpacity(0.25), // Cor translúcida sobre o efeito de blur
             ),
           ),
         ),
       ),
       body: Container(
-        color: const Color(0xff2974ff),
+        color: Theme.of(context).colorScheme.primary,
         child: Consumer<NoteProvider>(
           builder: (context, noteProvider, child) {
             List<NoteModel> notes = noteProvider.notes;

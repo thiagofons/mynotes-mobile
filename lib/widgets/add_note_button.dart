@@ -153,7 +153,11 @@ class _AddNoteButtonState extends State<AddNoteButton> {
                 ),
               ),
             );
-          });
+          }).then((_) {
+        // Clear the text when the dialog is closed
+        textControllers["title"]!.clear();
+        textControllers["content"]!.clear();
+      });
       /**
       Provider.of<NoteProvider>(context, listen: false)
           .createNote(NoteModel(title: ""));
