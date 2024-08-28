@@ -2,11 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mynotes/providers/note.dart';
 import 'package:mynotes/screens/home.dart';
+import 'package:mynotes/services/note.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  NoteService noteService = NoteService();
+
   runApp(MultiProvider(
-    providers: [ChangeNotifierProvider(create: (_) => NoteProvider())],
+    providers: [
+      ChangeNotifierProvider(create: (_) => NoteProvider(noteService))
+    ],
     child: const MainApp(),
   ));
 }
@@ -24,9 +29,9 @@ class MainApp extends StatelessWidget {
 
         // Define the default brightness and colors.
         colorScheme: const ColorScheme.light(
-          surface: Colors.white,
-          brightness: Brightness.dark,
-        ),
+            surface: Colors.white,
+            brightness: Brightness.dark,
+            error: Color(0xFFE3170A)),
 
         textTheme: TextTheme(
           titleLarge: GoogleFonts.inter(),
