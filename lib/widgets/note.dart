@@ -4,9 +4,9 @@ import 'package:mynotes/providers/note.dart';
 import 'package:provider/provider.dart';
 
 class Note extends StatefulWidget {
-  final NoteModel data;
+  final NoteModel note;
 
-  const Note({super.key, required this.data});
+  const Note({super.key, required this.note});
 
   @override
   State<Note> createState() => _NoteState();
@@ -16,8 +16,7 @@ class _NoteState extends State<Note> {
   @override
   Widget build(BuildContext context) {
     removeNote() {
-      Provider.of<NoteProvider>(context, listen: false)
-          .removeNote(widget.data.id!);
+      Provider.of<NoteProvider>(context, listen: false).removeNote(widget.note);
     }
 
     viewNoteDialog() {
@@ -45,14 +44,14 @@ class _NoteState extends State<Note> {
                   Column(
                     children: [
                       Text(
-                        widget.data.title ?? "",
+                        widget.note.title ?? "",
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                       const SizedBox(
                         height: 12,
                       ),
                       Text(
-                        widget.data.content ?? "",
+                        widget.note.content ?? "",
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ],
@@ -155,7 +154,7 @@ class _NoteState extends State<Note> {
               children: [
                 Expanded(
                   child: Text(
-                    widget.data.title ?? "",
+                    widget.note.title ?? "",
                     style: Theme.of(context).textTheme.titleMedium,
                     maxLines: 1,
                     overflow:
@@ -176,7 +175,7 @@ class _NoteState extends State<Note> {
             Expanded(
               child: SingleChildScrollView(
                 child: Text(
-                  widget.data.content ?? "",
+                  widget.note.content ?? "",
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),

@@ -14,16 +14,33 @@ class NoteProvider with ChangeNotifier {
 
   List<NoteModel> get notes => _notes;
 
-  void createNote(NoteModel note) {
-    note.id = uuid.v1();
+  Future<void> fetchNotesFromServer() async {
+    final request = await _noteService.getNotesFromServer();
 
-    _notes.add(note);
+    if (request != null) {
+      _notes = request;
+    }
 
     notifyListeners();
   }
 
-  void removeNote(String id) {
-    _notes.removeWhere((note) => note.id == id);
+  void createNote(NoteModel note) {
+    note.id = uuid.v1();
+
+    _noteService.addNoteToServer(note).then((value) {
+      _notes.add(note);
+    });
+
+    notifyListeners();
+  }
+
+  void removeNote(NoteModel note) {
+    String id = note.id!;
+
+    _noteService.removeNoteFromServer(note).then((value) {
+      _notes.remove(note);
+    });
+
     notifyListeners();
   }
 

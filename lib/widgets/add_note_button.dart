@@ -183,10 +183,10 @@ class _AddNoteButtonState extends State<AddNoteButton> {
         onPressed: () => createNoteDialog(),
         style: const ButtonStyle(
           surfaceTintColor: WidgetStatePropertyAll(Color(0x22ffffff)),
-          shadowColor: WidgetStatePropertyAll(Color(0x22ffffff)),
+          shadowColor: WidgetStatePropertyAll(Color(0x22a1a1a1)),
           overlayColor: WidgetStatePropertyAll(Color(0x22000000)),
           minimumSize: WidgetStatePropertyAll(Size(64, 64)),
-          elevation: WidgetStatePropertyAll(12),
+          elevation: WidgetStatePropertyAll(24),
           alignment: Alignment.center,
           enableFeedback: true,
           fixedSize: WidgetStatePropertyAll(Size.square(48)),
