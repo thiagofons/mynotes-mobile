@@ -29,6 +29,7 @@ class MainApp extends StatelessWidget {
 
         // Define the default brightness and colors.
         cardColor: const Color(0xffffc93c),
+
         colorScheme: const ColorScheme.light(
             surface: Colors.white,
             brightness: Brightness.dark,
