@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mynotes/models/note.dart';
-import 'package:mynotes/providers/note.dart';
-import 'package:provider/provider.dart';
 
 class AddNoteButton extends StatelessWidget {
   const AddNoteButton({super.key});
@@ -9,8 +6,43 @@ class AddNoteButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     addNote() {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return Dialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              backgroundColor: Theme.of(context).cardColor,
+              child: Container(
+                constraints:
+                    const BoxConstraints(maxWidth: 300, maxHeight: 300),
+                padding: const EdgeInsets.all(12),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Column(
+                      children: [
+                        TextField(
+                          decoration: InputDecoration(label: Text("Título")),
+                        )
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        ElevatedButton(onPressed: () {}, child: Container()),
+                        ElevatedButton(onPressed: () {}, child: Container())
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            );
+          });
+      /**
       Provider.of<NoteProvider>(context, listen: false)
           .createNote(NoteModel(title: ""));
+      */
     }
 
     return ElevatedButton(
