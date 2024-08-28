@@ -34,7 +34,7 @@ class MainApp extends StatelessWidget {
             brightness: Brightness.dark,
             error: Color(0xFFE3170A),
             primary: Color(0xFF212121),
-            secondary: Color(0xFFD1D1D1)),
+            secondary: Color(0xFFE1E1E1)),
 
         textTheme: TextTheme(
           titleLarge: GoogleFonts.inter(),
@@ -50,10 +50,10 @@ class MainApp extends StatelessWidget {
         cardColor: const Color(0xffffc93c),
 
         colorScheme: const ColorScheme.light(
-          brightness: Brightness.dark,
-          error: Color(0xFFE3170A),
-          primary: Color(0xff2974ff),
-        ),
+            brightness: Brightness.dark,
+            error: Color(0xFFE3170A),
+            primary: Color(0xff2974ff),
+            secondary: Color(0xFFFFFFFF)),
 
         textTheme: TextTheme(
           titleLarge: GoogleFonts.inter(),

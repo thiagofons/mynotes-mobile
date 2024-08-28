@@ -7,8 +7,22 @@ import 'package:mynotes/widgets/add_note_button.dart';
 import 'package:mynotes/widgets/note.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  Future<void> _handleRefresh() async {
+    // Simulate network fetch or database query
+    await Future.delayed(Duration(seconds: 2));
+    // Update the list of items and refresh the UI
+    setState(() {
+      // items = List.generate(20, (index) => "Refreshed Item ${index + 1}");
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,20 +51,23 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: Container(
-        color: Theme.of(context).colorScheme.primary,
-        child: Consumer<NoteProvider>(
-          builder: (context, noteProvider, child) {
-            List<NoteModel> notes = noteProvider.notes;
-            return ListView.builder(
-              padding: const EdgeInsets.all(16),
-              itemCount: notes.length,
-              itemBuilder: (context, index) => Container(
-                margin: const EdgeInsets.only(bottom: 12),
-                child: Note(data: notes[index]),
-              ),
-            );
-          },
+      body: RefreshIndicator(
+        onRefresh: _handleRefresh,
+        child: Container(
+          color: Theme.of(context).colorScheme.primary,
+          child: Consumer<NoteProvider>(
+            builder: (context, noteProvider, child) {
+              List<NoteModel> notes = noteProvider.notes;
+              return ListView.builder(
+                padding: const EdgeInsets.all(16),
+                itemCount: notes.length,
+                itemBuilder: (context, index) => Container(
+                  margin: const EdgeInsets.only(bottom: 12),
+                  child: Note(data: notes[index]),
+                ),
+              );
+            },
+          ),
         ),
       ),
       floatingActionButton: const AddNoteButton(),
