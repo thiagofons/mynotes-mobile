@@ -22,4 +22,10 @@ class NoteModel {
       content: json['content'],
     );
   }
+
+  // Método toString para exibir as propriedades do modelo de forma legível
+  @override
+  String toString() {
+    return 'NoteModel{id: $id, title: $title, content: $content}';
+  }
 }

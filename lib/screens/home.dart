@@ -3,8 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:mynotes/models/note.dart';
 import 'package:mynotes/providers/note.dart';
-import 'package:mynotes/widgets/add_note_button.dart';
-import 'package:mynotes/widgets/note.dart';
+import 'package:mynotes/widgets/note/add_note_button.dart';
+import 'package:mynotes/widgets/note/note.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,7 +19,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     handleRefresh() async {
       // Simulate network fetch or database query
-      await Provider.of<NoteProvider>(context).fetchNotesFromServer();
+      await Provider.of<NoteProvider>(context, listen: false)
+          .fetchNotesFromServer();
       // Update the list of items and refresh the UI
       setState(() {
         // items = List.generate(20, (index) => "Refreshed Item ${index + 1}");
@@ -56,7 +57,8 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Container(
           color: Theme.of(context).colorScheme.primary,
           child: FutureBuilder(
-              future: Provider.of<NoteProvider>(context).fetchNotesFromServer(),
+              future: Provider.of<NoteProvider>(context, listen: false)
+                  .fetchNotesFromServer(),
               builder: (context, snapshot) => Consumer<NoteProvider>(
                     builder: (context, noteProvider, child) {
                       List<NoteModel> notes = noteProvider.notes;

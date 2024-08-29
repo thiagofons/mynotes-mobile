@@ -15,42 +15,40 @@ class NoteProvider with ChangeNotifier {
   List<NoteModel> get notes => _notes;
 
   Future<void> fetchNotesFromServer() async {
-    final request = await _noteService.getNotesFromServer();
-
-    if (request != null) {
-      _notes = request;
-    }
+    _notes = await _noteService.getNotesFromServer();
 
     notifyListeners();
   }
 
-  void createNote(NoteModel note) {
+  void createNote(NoteModel note) async {
     note.id = uuid.v1();
 
-    _noteService.addNoteToServer(note).then((value) {
+    final success = await _noteService.addNoteToServer(note);
+
+    if (success) {
       _notes.add(note);
-    });
-
-    notifyListeners();
+      notifyListeners();
+    }
   }
 
-  void removeNote(NoteModel note) {
-    String id = note.id!;
+  void removeNote(NoteModel note) async {
+    final success = await _noteService.removeNoteFromServer(note);
 
-    _noteService.removeNoteFromServer(note).then((value) {
+    if (success) {
       _notes.remove(note);
-    });
-
-    notifyListeners();
+      notifyListeners();
+    }
   }
 
-  /**
-  void updateNote(Note newNote) {
-    _notes.map((note) => {
-      if(note.id == newNote.id) {
-        note = newNote
-      }
-    });
+  void updateNote(NoteModel newNote) async {
+    final success = await _noteService.updateNoteInServer(newNote);
+
+    if (success) {
+      NoteModel oldNote = _notes.firstWhere((note) => note.id == newNote.id);
+      oldNote.title = newNote.title;
+      oldNote.content = newNote.content;
+
+      notifyListeners(); // Notifica os ouvintes sobre a alteração
+    }
   }
-  */
 }
