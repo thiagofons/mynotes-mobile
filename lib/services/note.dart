@@ -1,32 +1,22 @@
 import 'dart:convert';
 
+import "package:http/http.dart" as http;
 import 'package:logger/logger.dart';
+import 'package:mynotes/api/api_endpoints.dart';
 import 'package:mynotes/models/note.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 var logger = Logger();
 
 class NoteService {
   Future<List<NoteModel>> getNotesFromServer() async {
-    final prefs = await SharedPreferences.getInstance();
+    final request = await http.get(Uri.parse(ApiEndpoints.notes));
 
-    final List<String> notesStringList = prefs.getStringList("notes") ?? [];
-
-    return notesStringList.map((noteString) {
-      final Map<String, dynamic> noteJson = jsonDecode(noteString);
-      return NoteModel.fromJson(noteJson);
-    }).toList();
+    return NoteModel.listFromJson(jsonDecode(request.body));
   }
 
   Future<bool> addNoteToServer(NoteModel note) async {
     try {
-      final prefs = await SharedPreferences.getInstance();
-
-      final List<String> notesStringList = prefs.getStringList("notes") ?? [];
-
-      notesStringList.add(jsonEncode(note.toJson()));
-
-      await prefs.setStringList("notes", notesStringList);
+      await http.post(Uri.parse(ApiEndpoints.notes), body: note.toJson());
 
       return true;
     } catch (error) {
@@ -37,13 +27,7 @@ class NoteService {
 
   Future<bool> removeNoteFromServer(NoteModel note) async {
     try {
-      final prefs = await SharedPreferences.getInstance();
-
-      final List<String> notesStringList = prefs.getStringList("notes") ?? [];
-
-      notesStringList.remove(jsonEncode(note.toJson()));
-
-      await prefs.setStringList("notes", notesStringList);
+      await http.delete(Uri.parse(ApiEndpoints.notesById(note.id!)));
 
       return true;
     } catch (error) {
@@ -54,25 +38,8 @@ class NoteService {
 
   Future<bool> updateNoteInServer(NoteModel note) async {
     try {
-      final prefs = await SharedPreferences.getInstance();
-
-      final List<String> notesStringList = prefs.getStringList("notes") ?? [];
-
-      final List<String> updatedNotesStringList =
-          notesStringList.map((String item) {
-        NoteModel decodedItem = NoteModel.fromJson(jsonDecode(item));
-
-        if (decodedItem.id == note.id) {
-          logger.d(note.toString());
-
-          return jsonEncode(note.toJson());
-        }
-        // Retorna o item não modificado
-        return item;
-      }).toList();
-
-      // Salva a lista atualizada no SharedPreferences
-      await prefs.setStringList("notes", updatedNotesStringList);
+      await http.put(Uri.parse(ApiEndpoints.notesById(note.id!)),
+          body: note.toJson());
 
       return true;
     } catch (error) {

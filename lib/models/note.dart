@@ -2,6 +2,7 @@ class NoteModel {
   late String? id;
   late String? title;
   late String? content;
+  late String? createdAt;
 
   NoteModel({this.id, required this.title, this.content});
 
@@ -21,6 +22,10 @@ class NoteModel {
       title: json['title'],
       content: json['content'],
     );
+  }
+
+  static List<NoteModel> listFromJson(List<dynamic> jsonList) {
+    return jsonList.map((json) => NoteModel.fromJson(json)).toList();
   }
 
   // Método toString para exibir as propriedades do modelo de forma legível
