@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mynotes/models/note.dart';
-import 'package:mynotes/providers/note.dart';
 import 'package:mynotes/widgets/note/add_note_dialog.dart';
-import 'package:provider/provider.dart';
 
 class AddNoteButton extends StatefulWidget {
   const AddNoteButton({super.key});
@@ -32,15 +29,6 @@ class _AddNoteButtonState extends State<AddNoteButton> {
 
   @override
   Widget build(BuildContext context) {
-    createNote() {
-      Provider.of<NoteProvider>(context, listen: false).createNote(NoteModel(
-          title: textControllers["title"]?.text,
-          content: textControllers["content"]?.text));
-      Navigator.of(context).pop();
-
-      setState(() {});
-    }
-
     createNoteDialog() {
       showGeneralDialog(
         context: context,

@@ -8,7 +8,7 @@ class NoteProvider with ChangeNotifier {
 
   NoteProvider(this._noteService);
 
-  var uuid = Uuid();
+  var uuid = const Uuid();
 
   List<NoteModel> _notes = [];
 
@@ -33,6 +33,8 @@ class NoteProvider with ChangeNotifier {
 
   void removeNote(NoteModel note) async {
     final success = await _noteService.removeNoteFromServer(note);
+
+    logger.d(success);
 
     if (success) {
       _notes.remove(note);
