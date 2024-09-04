@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mynotes/providers/note.dart';
 import 'package:mynotes/screens/home.dart';
 import 'package:mynotes/services/note.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+Future<void> main() async {
+  await dotenv.load(fileName: ".env");
+
   NoteService noteService = NoteService();
 
   runApp(MultiProvider(
